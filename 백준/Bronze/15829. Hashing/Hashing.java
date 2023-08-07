@@ -9,8 +9,14 @@ public class Main {
         int result = 0;
 
         for(int i = 0; i < s.length(); i++){
-            result += (s.charAt(i) - 'a' + 1) * Math.pow(31, i);
+            int value = 1;
 
+            for(int j = 0; j < i; j++){
+                value *= 31;
+                value %= 1234567891;
+            }
+
+            result += (s.charAt(i) - 'a' + 1) * value;
             result %= 1234567891;
         }
 
