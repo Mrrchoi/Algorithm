@@ -13,11 +13,11 @@ public class Solution {
 
             int left = 0, right = 100;
 
-            while(box[left] == 0) left++; //box[10] == 1
-            while(box[right] == 0) right--;//
+            while(box[left] == 0) left++;
+            while(box[right] == 0) right--;
 
             for(int j = 0; j < dump; j++){
-                if(right - left == 1) break;
+                if(right - left <= 1) break;
 
                 box[left]--;
                 box[left + 1]++;
