@@ -8,14 +8,19 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
 
-        for(int i = 0; i < n; i++){
+        loop: for(int i = 0; i < n; i++){
             Stack<Character> stack = new Stack<>();
             st = new StringTokenizer(br.readLine());
             String s = st.nextToken();
 
-            for(char ch : s.toCharArray()){
-                if(stack.size() == 0 || !(stack.peek() == '(' && ch == ')')) stack.push(ch);
-                else stack.pop();
+            for(char ch : s.toCharArray()){ //((()()(()))(((())))()
+                //['(', '(' ... juckgima
+                if(stack.size() == 0 && ch == ')'){
+                    bw.write("NO\n");
+                    continue loop;
+                }
+                else if(ch == '(') stack.push(ch);
+                else if(ch == ')') stack.pop();
             }
 
             if(stack.size() == 0) bw.write("YES\n");
