@@ -6,7 +6,7 @@ public class Solution {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         Map<Character, Integer> rank = new HashMap<Character, Integer>(){{
-            put('(', 0); put(')', 0); put('+', 1); put('-', 1); put('*', 2); put('/', 2);
+            put('(', 0); put(')', 0); put('+', 1); put('*', 2);
         }};
 
         for(int t = 1; t <= 10; t++){
@@ -41,9 +41,7 @@ public class Solution {
                 if(ch >= '0' && ch <= '9') cal.push(ch - '0');
                 else{
                     if(ch == '+') cal.push(cal.pop() + cal.pop());
-                    else if(ch == '-') cal.push(cal.pop() - cal.pop());
                     else if(ch == '*') cal.push(cal.pop() * cal.pop());
-                    else if(ch == '/') cal.push(cal.pop() / cal.pop());
                 }
             }
 
