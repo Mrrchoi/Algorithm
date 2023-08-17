@@ -2,30 +2,39 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    public static void main(String args[]) throws Exception {
-        Scanner sc = new Scanner(System.in);
-        int k = sc.nextInt();
-        int n = sc.nextInt();
-        long[] len = new long[k];
-        long max = 0;
+    public static void main(String[] args) throws Exception{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        for(int i = 0; i < k; i++){
-            len[i] = sc.nextInt();
-            if(max < len[i]) max = len[i];
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+
+        int[] arr = new int[N];
+        for (int i = 0; i < N; i ++) arr[i] = Integer.parseInt(br.readLine());
+
+        Arrays.sort(arr);
+
+        int cnt = 0;
+        long right = arr[N-1];
+        long left = 1;
+        long result = 0;
+
+        while (left <= right) {
+            long mid = (right + left) / 2;
+
+            cnt = 0;
+            for (int a : arr) cnt += a / mid;
+
+            if (cnt < K)
+                right = mid - 1;
+            else {
+                result = Math.max(result, mid);
+                left = mid + 1;
+            }
         }
 
-        long start = 0, end = max + 1;
-
-        while(start < end){
-            long mid = (start + end) / 2;
-            int sum = 0;
-
-            for(long value : len) sum += value / mid;
-
-            if(sum < n) end = mid;
-            else start = mid + 1;
-        }
-
-        System.out.println(start - 1);
+        bw.write(result + "");
+        bw.close();
     }
 }
