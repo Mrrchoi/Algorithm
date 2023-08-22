@@ -2,59 +2,52 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static boolean[] visited;
-    static int[][] com;
-    static int count = 0;
+    public static boolean[] visit;
 
-    public static void dfs_set(int n){
-        visited = new boolean[n + 1];
-        com = new int[n + 1][n + 1];
-    }
-    public static void dfs(int idx){
-        visited[idx] = true;
+    public static int bfs(ArrayList<Integer>[] list, int start, int count){
+        Queue<Integer> queue = new LinkedList<>();
 
-        if(idx != 1) count++;
+        queue.offer(start);
+        visit[start] = true;
 
-        for(int i : com[idx]){
-            if(i == 0) return;
+        while(!queue.isEmpty()){
+            int now = queue.poll();
 
-            if(!visited[i]) dfs(i);
+            for(int v : list[now]){
+                if(!visit[v]){
+                    queue.offer(v);
+                    visit[v] = true;
+                    count++;
+                }
+            }
         }
-    }
 
-    public static void main(String[] args) throws Exception {
+        return count;
+    }
+    public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
         int n = Integer.parseInt(br.readLine());
-        int t = Integer.parseInt(br.readLine());
+        int m = Integer.parseInt(br.readLine());
 
-        dfs_set(n);
+        visit = new boolean[n + 1];
 
-        for(int i = 0; i < t; i++){
+        ArrayList<Integer>[] list = new ArrayList[n + 1];
+
+        for(int i = 0; i < n + 1; i++) list[i] = new ArrayList<Integer>();
+
+        for(int i = 0; i < m; i++){
             st = new StringTokenizer(br.readLine());
-            int idx1 = Integer.parseInt(st.nextToken());
-            int idx2 = Integer.parseInt(st.nextToken());
+            int n1 = Integer.parseInt(st.nextToken());
+            int n2 = Integer.parseInt(st.nextToken());
 
-            for(int j = 0; j < n + 1; j++) {
-                if (com[idx1][j] == 0) {
-                    com[idx1][j] = idx2;
-                    break;
-                }
-            }
+            list[n1].add(n2);
+            list[n2].add(n1);
 
-            for(int j = 0; j < n + 1; j++) {
-                if (com[idx2][j] == 0) {
-                    com[idx2][j] = idx1;
-                    break;
-                }
-            }
         }
 
-        dfs(1);
+        System.out.println(bfs(list, 1, 0));
 
-        bw.write(count + "");
-        bw.flush();
-        bw.close();
     }
 }
