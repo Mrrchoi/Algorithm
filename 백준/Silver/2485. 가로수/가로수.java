@@ -2,43 +2,32 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static int gcd(int a, int b){
-        int n;
-
-        while(b != 0){
-            n = a % b;
-            a = b;
-            b = n;
-        }
-
-        return a;
+    public static int Euclidean(int a, int b){
+        if(a % b == 0) return b;
+        else return Euclidean(b, a % b);
     }
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int[] arr = new int[n - 1];
-        int count = 0;
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        int[] distance = new int[n - 1];
 
-        st = new StringTokenizer(br.readLine());
-        int last = Integer.parseInt(st.nextToken());
+        for(int i = 0; i < n; i++) arr[i] = sc.nextInt();
 
+        Arrays.sort(arr);
+
+        for(int i = 1; i < n; i++) distance[i - 1] = arr[i] - arr[i - 1];
+
+        int gcd = distance[0];
         for(int i = 0; i < n - 1; i++){
-            st = new StringTokenizer(br.readLine());
-            int k = Integer.parseInt(st.nextToken());
-            arr[i] = k - last;
-            last = k;
+            gcd = Euclidean(gcd, distance[i]);
         }
 
-        int gcd = gcd(Math.max(arr[0], arr[1]), Math.min(arr[0], arr[1]));
+        int count = 0;
+        for(int i = 0; i < n - 1; i++){
+            count += distance[i] / gcd - 1;
+        }
 
-        for(int i = 2; i < n - 3; i++) gcd = gcd(Math.max(arr[i], gcd), Math.min(arr[i], gcd));
-
-        for(int i = 0; i < n - 1; i++) if(arr[i] != gcd) count += arr[i] / gcd - 1;
-
-        bw.write( count + "\n");
-        bw.flush();
-        bw.close();
+        System.out.println(count);
     }
 }
