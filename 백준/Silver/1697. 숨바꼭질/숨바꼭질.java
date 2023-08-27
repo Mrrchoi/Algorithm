@@ -1,5 +1,4 @@
 import java.util.*;
-import java.io.*;
 
 public class Main {
     public static void bfs(int n, int k){
@@ -9,23 +8,28 @@ public class Main {
         queue.offer(n);
 
         while(!queue.isEmpty()){
-            if(queue.contains(k)){
+            int v = queue.poll();
+            
+            if(v == k){
                 System.out.println(visit[k]);
                 break;
             }
 
-            int v = queue.poll();
-            int[] arr = {v - 1, v + 1, v * 2};
-
-            for(int i = 0; i < 3; i++){
-                if(arr[i] >= 0 && arr[i] <= 100000 && visit[arr[i]] == 0){
-                    visit[arr[i]] = visit[v] + 1;
-                    queue.offer(arr[i]);
-                }
+            if(v - 1 >= 0 && v - 1 <= 100000 && visit[v - 1] == 0){
+                visit[v - 1] = visit[v] + 1;
+                queue.offer(v - 1);
+            }
+            if(v + 1 >= 0 && v + 1 <= 100000 && visit[v + 1] == 0){
+                visit[v + 1] = visit[v] + 1;
+                queue.offer(v + 1);
+            }
+            if(v * 2 >= 0 && v * 2 <= 100000 && visit[v * 2] == 0){
+                visit[v * 2] = visit[v] + 1;
+                queue.offer(v * 2);
             }
         }
     }
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         int k = sc.nextInt();
