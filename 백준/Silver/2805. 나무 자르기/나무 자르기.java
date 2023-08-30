@@ -6,7 +6,7 @@ public class Main {
         int n = sc.nextInt();
         int m = sc.nextInt();
         int[] arr = new int[n];
-        int left = 1, right = 0;
+        int left = 0, right = 0;
 
         for(int i = 0; i < n; i++){
             arr[i] = sc.nextInt();
@@ -23,6 +23,6 @@ public class Main {
             else if(sum < m) right = mid - 1;
         }
 
-        System.out.println(left - 1);
+        System.out.println(right);
     }
 }
