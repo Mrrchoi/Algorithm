@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.*;
 
 public class Solution {
@@ -6,16 +7,20 @@ public class Solution {
         else return n * pow(n, m - 1);
     }
 
-    public static void main(String[] args) throws Exception{
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st;
 
-        for(int i = 0; i < 10; i++){
-            int t = sc.nextInt();
-            int n = sc.nextInt();
-            int m = sc.nextInt();
+        for(int t = 1; t <= 10; t++){
+            br.readLine();
+            st = new StringTokenizer(br.readLine());
+            int n = Integer.parseInt(st.nextToken());
+            int m = Integer.parseInt(st.nextToken());
 
-            System.out.println("#" + t + " " + pow(n, m));
-
+            bw.write("#" + t + " " + pow(n, m) + "\n");
         }
+
+        bw.close();
     }
 }
