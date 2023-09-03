@@ -20,41 +20,29 @@ public class Solution {
 
         isOk = true;
     }
-    public static void dfs(int[][] film, int[] target, int k, int idx){
-        if(idx == target.length){
+    public static void combination(int[][] film, int k, int need, int count, int idx){
+        if(count == need){
             check(film, k);
             return;
         }
+        else if(idx == film.length) return;
 
-        int[] backup = Arrays.copyOfRange(film[target[idx]], 0, film[0].length);
+        int[] backup = Arrays.copyOfRange(film[idx], 0, film[0].length);
 
-        Arrays.fill(film[target[idx]], 0);
-        dfs(film, target, k, idx + 1);
+        Arrays.fill(film[idx], 0);
+        combination(film, k, need,count + 1, idx + 1);
 
-        Arrays.fill(film[target[idx]], 1);
-        dfs(film, target, k, idx + 1);
+        Arrays.fill(film[idx], 1);
+        combination(film, k, need,count + 1, idx + 1);
 
-        film[target[idx]] = Arrays.copyOfRange(backup, 0, backup.length);
-    }
-    public static void combination(int[][] film, int[] target, int value, int tgtIdx, int k){
-        if(tgtIdx == target.length){
-            dfs(film, target, k, 0);
-            return;
-        }
-        else if(value == film.length) return;
-
-        target[tgtIdx] = value;
-        combination(film, target, value + 1, tgtIdx + 1, k);
-        combination(film, target, value + 1, tgtIdx, k);
-
+        film[idx] = Arrays.copyOfRange(backup, 0, backup.length);
+        combination(film, k, need,count, idx + 1);
     }
     public static int search(int[][] film, int k){
         int need = 0;
 
         while(true){
-            int[] target = new int[need];
-
-            combination(film, target, 0, 0, k);
+            combination(film, k, need, 0, 0);
 
             if(isOk) return need;
 
