@@ -22,36 +22,31 @@ public class Solution {
             for(int i = 0; i < n - 2; i++){
                 for(int j = 1; j < n - 1; j++){
                     for(int k = 1;; k++){
-                        int left_point_r = i + k;
-                        int left_point_c = j + - k;
-
-                        if(left_point_r >= n - 1 || left_point_c < 0) break;
+                        if(i + k >= n - 1 || j - k < 0) break;
 
                         loop: for(int l = 1;; l++){
-                            int right_point_r = i + l;
-                            int right_point_c = j + l;
+                            if(i + l >= n - 1 || j + l >= n || i + l + k >= n) break;
 
-                            if(right_point_r >= n - 1 || right_point_c >= n || right_point_r + k >= n) break;
-
-                            Set<Integer> number = new HashSet<>();
-                            int count = 0;
+                            List<Integer> number = new ArrayList<>();
 
                             for(int m = 0; m <= l; m++){
-                                number.add(dessert[i + m][j + m]);
-                                number.add(dessert[left_point_r + m][left_point_c + m]);
+                                int num1 = dessert[i + m][j + m];
+                                int num2 = dessert[i + k + m][j - k + m];
 
-                                count += 2;
+                                if(num1 == num2 || number.contains(num1) || number.contains(num2)) continue loop;
 
-                                if(count != number.size()) continue loop;
+                                number.add(num1);
+                                number.add(num2);
                             }
 
                             for(int m = 1; m < k; m++){
-                                number.add(dessert[i + m][j - m]);
-                                number.add(dessert[right_point_r + m][right_point_c - m]);
+                                int num1 = dessert[i + m][j -  m];
+                                int num2 = dessert[i + l + m][j + l - m];
 
-                                count += 2;
+                                if(num1 == num2 || number.contains(num1) || number.contains(num2)) continue loop;
 
-                                if(count != number.size()) continue loop;
+                                number.add(num1);
+                                number.add(num2);
                             }
 
                             max = max > number.size() ? max : number.size();
