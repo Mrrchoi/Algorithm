@@ -9,11 +9,11 @@ class Solution {
         for(int w : graph[v]) {
             if(!visit[w]) {
                 dfs(graph, visit, w, count + 1);
+                visit[w] = false;
             }
         }
 
         if(max < count) max = count;
-        visit[v] = false;
     }
 
     public static void main(String[] args) throws IOException {
