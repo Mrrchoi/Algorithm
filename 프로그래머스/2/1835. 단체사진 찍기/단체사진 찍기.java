@@ -1,16 +1,12 @@
 import java.util.*;
 
 class Solution {
-    public Map<Character, Integer> map = new HashMap<Character, Integer>(){{
-        put('A', 0); put('C', 1); put('F', 2); put('J', 3);
-        put('M', 4); put('N', 5); put('R', 6); put('T', 7);
-    }};
     public int answer = 0;
-    public boolean promising(int[] arr, String[] data){
+    public boolean promising(Map<Character, Integer> map, String[] data){
         for(int i = 0; i < data.length; i++) {
             char op = data[i].charAt(3);
             int value = data[i].charAt(4) - '0';
-            int gap = Math.abs(arr[map.get(data[i].charAt(0))] - arr[map.get(data[i].charAt(2))]) - 1;
+            int gap = Math.abs(map.get(data[i].charAt(0)) - map.get(data[i].charAt(2))) - 1;
 
             if(op == '=' && gap != value) return false;
             else if(op == '>' && gap <= value) return false;
@@ -19,29 +15,26 @@ class Solution {
 
         return true;
     }
-    public void permutation(int[] arr, String[] data, int depth) {
-        if(depth == 8) {
-            if(promising(arr, data)) answer++;
+    public void permutation(Map<Character, Integer> map, char[] kakao, boolean[] visit, String[] data, int idx) {
+        if(idx == kakao.length) {
+            if(promising(map, data)) answer++;
             return;
         }
 
-        for(int i = depth; i < 8; i++) {
-            swap(arr, i, depth);
-            permutation(arr, data, depth + 1);
-            swap(arr, i, depth);
+        for(int i = 0; i < kakao.length; i++) {
+            if(!visit[i]) {
+                map.put(kakao[idx], i);
+                visit[i] = true;
+                permutation(map, kakao, visit, data, idx + 1);
+                visit[i] = false;
+            }
         }
     }
-    public void swap(int[] arr, int idx1, int idx2) {
-        int tmp = arr[idx1];
-        arr[idx1] = arr[idx2];
-        arr[idx2] = tmp;
-    }
     public int solution(int n, String[] data) {
-        int[] arr = new int[8];
+        Map<Character, Integer> map = new HashMap<>();
+        char[] kakao = {'A', 'C', 'F', 'J', 'M', 'N', 'R', 'T'};
 
-        for(int i = 0; i < 8; i++) arr[i] = i;
-
-        permutation(arr, data, 0);
+        permutation(map, kakao, new boolean[kakao.length], data, 0);
 
         return answer;
     }
