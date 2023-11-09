@@ -12,7 +12,7 @@ class Solution {
         }
 
         while (true) {
-            Set<Point> set = new LinkedHashSet<>();
+            Set<Point> set = new HashSet<>();
 
             for(int i = 0; i < m - 1; i++){
                 loop: for(int j = 0; j < n - 1; j++) {
@@ -39,11 +39,25 @@ class Solution {
                 answer += set.size();
 
                 for(Point p : set) {
-                    for(int i = p.x - 1; i >=0; i--) {
-                        block[i + 1][p.y] = block[i][p.y];
+                    block[p.x][p.y] = '@';
+                }
+
+                for(int i = 0; i < n; i++) {
+                    int idx1 = m - 1, idx2 = m - 1;
+                    while(idx2 >= 0) {
+                        if(block[idx2][i] == '@') {
+                            idx2--;
+                        }
+                        else {
+                            block[idx1--][i] = block[idx2--][i];
+                        }
+
+                        if(idx2 == -1) {
+                            for(int j = idx1; j >= 0; j--) {
+                                block[j][i] = '@';
+                            }
+                        }
                     }
-                    
-                    block[0][p.y] = '@';
                 }
             }
         }
