@@ -20,7 +20,7 @@ class Solution {
                 answer = -1;
                 break;
             }
-            
+
             if(sum1 > sum2) {
                 int k = queue_1.poll();
                 queue_2.offer(k);
