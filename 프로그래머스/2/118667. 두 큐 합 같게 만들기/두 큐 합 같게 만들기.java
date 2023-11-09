@@ -16,7 +16,7 @@ class Solution {
         }
 
         while(sum1 != sum2) {
-            if(answer > queue1.length * 3) {
+            if(answer > 600000) {
                 answer = -1;
                 break;
             }
