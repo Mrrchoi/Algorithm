@@ -13,11 +13,11 @@ public class Main {
             int nr = r + delta[i][0];
             int nc = c + delta[i][1];
 
-            if(nr < 0 || nr >= alpha.length || nc < 0 || nc >= alpha[0].length || visit[alpha[r][c] - 'A']) continue;
+            if(nr < 0 || nr >= alpha.length || nc < 0 || nc >= alpha[0].length || visit[alpha[nr][nc] - 'A']) continue;
 
-            visit[alpha[r][c] - 'A'] = true;
+            visit[alpha[nr][nc] - 'A'] = true;
             dfs(nr, nc, count + 1);
-            visit[alpha[r][c] - 'A'] = false;
+            visit[alpha[nr][nc] - 'A'] = false;
         }
 
         max = Math.max(max, count);
@@ -35,7 +35,9 @@ public class Main {
             alpha[i] = br.readLine().toCharArray();
         }
 
-        dfs(0, 0, 0);
+        visit[alpha[0][0] - 'A'] = true;
+
+        dfs(0, 0, 1);
 
         bw.write(max + "");
         bw.close();
