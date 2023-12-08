@@ -21,10 +21,6 @@ class Solution {
             }
         }
         
-        // for(int[] arr : dp) {
-        //     System.out.println(Arrays.toString(arr));
-        // }
-        
         return dp[n][m];
     }
 }
