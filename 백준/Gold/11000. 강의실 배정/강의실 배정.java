@@ -19,19 +19,17 @@ public class Main {
 
         PriorityQueue<int[]> pq = new PriorityQueue<>((o1, o2) -> o1[1] - o2[1]);
 
-        Arrays.sort(time, (o1, o2) -> o1[0] - o2[0]);
-        int room = 0;
+        Arrays.sort(time, (o1, o2) -> o1[0] != o2[0] ? o1[0] - o2[0] : o1[1] - o2[1]);
 
         for(int i = 0; i < n; i++) {
-            while (!pq.isEmpty() && pq.peek()[1] <= time[i][0]) {
+            if (!pq.isEmpty() && pq.peek()[1] <= time[i][0]) {
                 pq.poll();
             }
 
             pq.add(time[i]);
-            room = Math.max(room, pq.size());
         }
 
-        bw.write(room + "");
+        bw.write(pq.size() + "");
         bw.close();
     }
 }
