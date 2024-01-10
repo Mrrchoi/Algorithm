@@ -1,10 +1,5 @@
 import java.util.*;
 
-// 이번 달에 많이 준 사람이 하나 받음
-// 없거나 같으면 '선물 지수' 큰 사람이 하나 받음
-// 선물 지수: 전체 GIVE - 전체 TAKE
-// 이것까지 같아? 그럼 하지마
-// MAX?
 class Solution {
     public int solution(String[] friends, String[] gifts) {
         Map<String, Integer>[] giveNtake = new HashMap[friends.length];
