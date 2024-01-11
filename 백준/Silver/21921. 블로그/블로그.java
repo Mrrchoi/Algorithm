@@ -16,8 +16,7 @@ public class Main {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        long sum = 0, max= 0;
-        int count = 0;
+        int sum = 0, max = 0, count = 0;
 
         for(int i = 1; i < x; i++) {
             sum += arr[i];
