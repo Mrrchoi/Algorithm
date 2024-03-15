@@ -1,30 +1,40 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
 public class Main {
-	public static int answer = 0;
-	
-	public static void main(String[] args) {
-		// 입력
-		Scanner scanner = new Scanner(System.in);
-		int N = scanner.nextInt();
-		int[] T = new int[N]; // 상담에 걸리는 시간
-		int[] P = new int[N]; // 받을 수 있는 금액
-		for(int i = 0; i < N; i++) {
-			T[i] = scanner.nextInt();
-			P[i] = scanner.nextInt();
-		}
-		scanner.close();
-		// 계산
-		work(T, P, 1, N-1, 0);
-		// 출력
-		System.out.println(answer);
-	}
-	
-	public static void work(int[] T, int[] P, int date, int start, int tmp) {
-		answer = Math.max(tmp, answer);
-		for(int i = start; i >= 0; i--) {
-			if(T[i] <= date) work(T, P, 1, i-1, tmp+P[i]);
-			date++;
-		}
-	}
+    public static int max = 0;
+    public static void bruteForce(int[][] arr, int n, int idx, int total) {
+        if(idx == n) {
+            max = Math.max(max, total);
+            return;
+        }
+
+        int next = idx + arr[idx][0];
+
+        if(next <= n) {
+            bruteForce(arr, n, next, total + arr[idx][1]);
+        }
+
+        bruteForce(arr, n, idx + 1, total);
+    }
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st;
+        int n = Integer.parseInt(br.readLine());
+        int[][] arr = new int[n][2];
+
+        for(int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine());
+
+            for(int j = 0; j < 2; j++) {
+                arr[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+
+        bruteForce(arr, n, 0, 0);
+
+        bw.write(max + "");
+        bw.close();
+    }
 }
