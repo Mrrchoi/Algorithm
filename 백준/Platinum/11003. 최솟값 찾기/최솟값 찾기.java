@@ -20,20 +20,14 @@ public class Main {
         }
 
         for (int i = 0; i < n; i++) {
-            while (!deque.isEmpty() && i - deque.peekFirst() >= l) {
-                deque.pollFirst();
+            while (!deque.isEmpty() && arr[i] <= arr[deque.peekLast()]) {
+                deque.pollLast();
             }
 
-            if (deque.isEmpty() || arr[i] <= arr[deque.peekFirst()]) {
-                deque.pollFirst();
-                deque.addFirst(i);
-            }
-            else {
-                while (i - deque.peekLast() >= l || arr[i] <= arr[deque.peekLast()]) {
-                    deque.pollLast();
-                }
+            deque.addLast(i);
 
-                deque.addLast(i);
+            while (i - deque.peekFirst() >= l) {
+                deque.pollFirst();
             }
 
             bw.write(arr[deque.peekFirst()] + " ");
